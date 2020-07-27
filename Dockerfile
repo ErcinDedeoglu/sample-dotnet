@@ -5,6 +5,7 @@ RUN dotnet restore "Sample/Sample.csproj"
 COPY . .
 WORKDIR "/src/Sample"
 RUN dotnet build "Sample.csproj" -c Debug -o /app
+RUN chmod +x structure.sh
 RUN ./structure.sh
 
 FROM build AS publish
