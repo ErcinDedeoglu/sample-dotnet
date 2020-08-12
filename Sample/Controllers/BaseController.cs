@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using PrimeAppsDotNet;
+using PrimeAppsDotNet.Exceptions;
 
 namespace Sample.Controllers
 {
@@ -51,6 +52,15 @@ namespace Sample.Controllers
             Authorization = authorization;
             AppId = appId;
             TenantId = tenantId;
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            if (context.Exception is UnauthorizedException exception)
+            {
+                context.Result = new UnauthorizedObjectResult(null);
+                context.ExceptionHandled = true;
+            }
         }
 
         private PrimeApps GetPrimeAppsClient()
