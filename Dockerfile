@@ -4,12 +4,12 @@ COPY ["Sample/Sample.csproj", "Sample/"]
 RUN dotnet restore "Sample/Sample.csproj"
 COPY . .
 WORKDIR "/src/Sample"
-RUN dotnet build "Sample.csproj" -c Debug -o /app
+RUN dotnet build "Sample.csproj" --no-restore -c Release -o /app
 RUN chmod +x structure.sh
 RUN ./structure.sh
 
 FROM build AS publish
-RUN dotnet publish "Sample.csproj" --no-restore --self-contained false -c Debug -o /app
+RUN dotnet publish "Sample.csproj" --no-restore --self-contained false -c Release -o /app
 RUN cp wwwroot/structure.json /app/wwwroot/structure.json
 
 FROM microsoft/dotnet:2.2-aspnetcore-runtime-stretch-slim AS base
