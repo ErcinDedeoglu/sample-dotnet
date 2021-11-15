@@ -1,1 +1,1 @@
-mdToast.success('Record Owner is ' + scope.record.owner.full_name);
+mdToast.info('Record Owner is ' + scope.record.owner.full_name);
