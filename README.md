@@ -4,7 +4,7 @@ This sample demonstrates how to develop a PrimeApps project using .NET Core.
 
 ### Prerequisites
 
-Before running this sample locally, you need to install and start PrimeApps Runtime. Please follow [this guide](https://github.com/primeapps-io/runtime/blob/master/README.md) to install PrimeApps Runtime. Then follow the steps below.
+Before running this sample locally, you need to install and start PrimeApps Runtime. Please follow [this guide](https://github.com/primeapps-io/omnibus) to install PrimeApps Runtime. Then follow the steps below.
 
 ### Setup
 
