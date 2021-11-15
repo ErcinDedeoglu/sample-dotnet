@@ -24,6 +24,8 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_URLS="https://+;http://+"
 ENV ASPNETCORE_HTTPS_PORT=443
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="1q2w3e4r5t"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="aspnetapp.pfx"
 
 FROM base AS final
 WORKDIR /app
