@@ -1,6 +1,6 @@
-## Sample PrimeApps Project (.NET Core)
+## Sample PrimeApps Container Project (.NET Core)
 
-This sample demonstrates how to develop a PrimeApps project using .NET Core.
+This sample demonstrates how to create a PrimeApps Container using .NET Core and Github Actions.
 
 ### Prerequisites
 
@@ -25,16 +25,16 @@ Clone the forked repository to your local machine. Create your APIs, scripts and
 #### 3. Build Docker image
 You can build and push the Docker image to GitHub Packages with simple steps. We've created ready-to-use Dockerfile and Github Build Actions for you.
 
-##### 3.1. Click "Actions" tab in the forked repository.
+##### 3.1. Click the "Actions" tab in the forked repository.
 > <img src="http://file.primeapps.io/assets/github/actions_tab.png" alt="drawing" width="350"/>
 
-##### 3.2. Click "I understand my workflows, go ahead and run them" button.
+##### 3.2. Click the "I understand my workflows, go ahead and run them" button.
 > <img src="http://file.primeapps.io/assets/github/actions_enable.png" alt="drawing" width="600"/>
 
-##### 3.3. Click "Create a new release" button. It's under "Code" tab.
+##### 3.3. Click the "Create a new release" button. It's under the "Code" tab.
 > <img src="http://file.primeapps.io/assets/github/releases_new.png" alt="drawing" width="140"/>
 
-##### 3.4. First enter v1.0.0 in "Choose a tag" input and click "Create new tag". Then click "Publish release" button. A build is started automatically. You can see progress in "Actions" menu. It will be finished in about 2 minutes.
+##### 3.4. First, enter v1.0.0 in the "Choose a tag" input and click the "Create new tag". Then click the "Publish release" button. A build is started automatically. You can see progress in the "Actions" menu. It will be finished in about 2 minutes.
 > <img src="http://file.primeapps.io/assets/github/releases_tag.png" alt="drawing" width="300"/>
 
 > <img src="http://file.primeapps.io/assets/github/releases_button.png" alt="drawing" width="250"/>
@@ -46,4 +46,4 @@ After the build is finished, your Docker image will be ready in "Packages" menu 
 > <img src="http://file.primeapps.io/assets/github/pull_command.png" alt="drawing" width="600"/>
 
 
-You can now create a container on PrimeApps Studio now. When you creating a container on PrimeApps Studio copy and paste the docker pull command to Image input.  
+You can now create a container on PrimeApps Studio now. When you create a container on PrimeApps Studio copy and paste the docker pull command to Image input.  
