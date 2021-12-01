@@ -44,15 +44,25 @@ namespace Sample.Controllers
             };
             var updateResult = await PrimeApps.RecordUpdate("celebrities", recordUpdate);
 
+            var profilePictureResponse = new ProfilePictureResponse()
+            {
+                IsVerified = (bool) jDto["graphql"]["user"]["is_verified"]
+            };
+
             //var fileStream = new MemoryStream(new WebClient().DownloadData(instagramProfilePicture));
 
 
-            return Ok(true);
+            return Ok(profilePictureResponse);
         }
 
         public class ProfilePictureRequest
         {
             public int RecordId { get; set; }
+        }
+
+        public class ProfilePictureResponse
+        {
+            public bool IsVerified { get; set; }
         }
     }
 }
