@@ -22,7 +22,7 @@ namespace Sample.Controllers
         ///<response code="400">Invalid request</response>
         ///<returns>List of Users</returns>
         [HttpPost, Route("set_profile_picture")]
-        [ProducesResponseType(typeof(ProfilePictureResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetProfilePicture([FromBody] ProfilePictureRequest request)
         {
@@ -37,32 +37,24 @@ namespace Sample.Controllers
 
             var jDto = JObject.Parse(jsonResult);
             var instagramProfilePicture = (string)jDto["graphql"]["user"]["profile_pic_url"];
+            var isVerified = (bool) jDto["graphql"]["user"]["is_verified"];
             var recordUpdate = new JObject
             {
                 ["id"] = request.RecordId,
-                ["profile_picture"] = instagramProfilePicture
+                ["profile_picture"] = instagramProfilePicture,
+                ["is_verified"] = isVerified
             };
             var updateResult = await PrimeApps.RecordUpdate("celebrities", recordUpdate);
-
-            var profilePictureResponse = new ProfilePictureResponse()
-            {
-                IsVerified = (bool) jDto["graphql"]["user"]["is_verified"]
-            };
-
+            
             //var fileStream = new MemoryStream(new WebClient().DownloadData(instagramProfilePicture));
 
 
-            return Ok(profilePictureResponse);
+            return Ok(true);
         }
 
         public class ProfilePictureRequest
         {
             public int RecordId { get; set; }
-        }
-
-        public class ProfilePictureResponse
-        {
-            public bool IsVerified { get; set; }
         }
     }
 }
