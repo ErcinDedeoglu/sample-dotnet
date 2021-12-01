@@ -22,7 +22,7 @@ namespace Sample.Controllers
         ///<response code="400">Invalid request</response>
         ///<returns>List of Users</returns>
         [HttpPost, Route("set_profile_picture")]
-        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProfilePictureResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetProfilePicture([FromBody] ProfilePictureRequest request)
         {
