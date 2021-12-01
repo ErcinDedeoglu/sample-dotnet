@@ -24,22 +24,22 @@ namespace Sample.Controllers
         [HttpPost, Route("set_profile_picture")]
         [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SetProfilePicture([FromBody]int recordId)
+        public async Task<IActionResult> SetProfilePicture([FromBody] ProfilePictureRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var celebrityRecord = await PrimeApps.RecordGet("celebrities", recordId);
+            var celebrityRecord = await PrimeApps.RecordGet("celebrities", request.RecordId);
             var instragramUsername = (string) celebrityRecord["instagram_username"];
             //
             HttpClient httpClient = new HttpClient();
-            var jsonResult = await httpClient.GetStringAsync("https://www.instagram.com/taylorswift/?__a=1");
+            var jsonResult = await httpClient.GetStringAsync("https://www.instagram.com/" + instragramUsername + "/?__a=1");
 
             var jDto = JObject.Parse(jsonResult);
             var instagramProfilePicture = (string)jDto["graphql"]["user"]["profile_pic_url"];
             var recordUpdate = new JObject
             {
-                ["id"] = recordId,
+                ["id"] = request.RecordId,
                 ["profile_picture"] = instagramProfilePicture
             };
             var updateResult = await PrimeApps.RecordUpdate("celebrities", recordUpdate);
@@ -48,6 +48,11 @@ namespace Sample.Controllers
 
 
             return Ok(true);
+        }
+
+        public class ProfilePictureRequest
+        {
+            public int RecordId { get; set; }
         }
     }
 }
