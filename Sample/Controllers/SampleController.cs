@@ -21,10 +21,10 @@ namespace Sample.Controllers
         ///<response code="200">Successful operation</response>
         ///<response code="400">Invalid request</response>
         ///<returns>List of Users</returns>
-        [HttpPost, Route("set_profile_picture")]
+        [HttpPost, Route("set_info")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SetProfilePicture([FromBody] ProfilePictureRequest request)
+        public async Task<IActionResult> SetInfo([FromBody] RequestDto request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -36,17 +36,16 @@ namespace Sample.Controllers
             var jsonResult = await httpClient.GetStringAsync("https://www.instagram.com/" + instragramUsername + "/?__a=1");
 
             var jDto = JObject.Parse(jsonResult);
-            var instagramProfilePicture = (string)jDto["graphql"]["user"]["profile_pic_url"];
-            var isVerified = (bool) jDto["graphql"]["user"]["is_verified"];
+            var externalUrl = (string)jDto["graphql"]["user"]["external_url"];
+            var biography = (string)jDto["graphql"]["user"]["biography"];
+
             var recordUpdate = new JObject
             {
                 ["id"] = request.RecordId,
-                ["profile_picture"] = instagramProfilePicture
+                ["external_url"] = externalUrl,
+                ["biography"] = biography,
             };
             var updateResult = await PrimeApps.RecordUpdate("celebrities", recordUpdate);
-            
-            //var fileStream = new MemoryStream(new WebClient().DownloadData(instagramProfilePicture));
-
 
             return Ok(new JObject{["result"] = true});
         }
@@ -60,14 +59,14 @@ namespace Sample.Controllers
         [HttpPost, Route("set_verification")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SetVerification([FromBody] ProfilePictureRequest request)
+        public async Task<IActionResult> SetVerification([FromBody] RequestDto request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var celebrityRecord = await PrimeApps.RecordGet("celebrities", request.RecordId);
             var instragramUsername = (string)celebrityRecord["instagram_username"];
-            //
+            
             HttpClient httpClient = new HttpClient();
             var jsonResult = await httpClient.GetStringAsync("https://www.instagram.com/" + instragramUsername + "/?__a=1");
 
@@ -84,7 +83,7 @@ namespace Sample.Controllers
             return Ok(new JObject { ["result"] = true });
         }
 
-        public class ProfilePictureRequest
+        public class RequestDto
         {
             public int RecordId { get; set; }
         }
